@@ -52,7 +52,7 @@ $(document).ready(function () {
             clazz = BATTERY_CHARGE_50;
         }
         var progressBar = $('.progress-bar');
-        jQuery.each(BATTERY_CHARGE_CLASSES, function( i, value){
+        jQuery.each(BATTERY_CHARGE_CLASSES, function (i, value) {
             progressBar.removeClass(value);
         });
         progressBar.css('width', numValue + '%').attr('aria-valuenow', numValue).addClass(clazz);
@@ -60,11 +60,15 @@ $(document).ready(function () {
 
     function sendPost(action, value) {
         var response;
-        $.post( "/Main", { action: action, value: value })
-            .done(function( data ) {
+        $.post("/Main", {action: action, value: value})
+            .done(function (data) {
                 return data;
             })
-            .error(function(err) {
+            .success(function (data) {
+                return data;
+            })
+            .error(function (err) {
+                console.log(err);
                 alert('Got unknown error!');
             });
     }

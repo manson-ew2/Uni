@@ -24,12 +24,10 @@
 <link href="<c:url value='/views/fonts/glyphicons-halflings-regular.woff2'/>" rel="stylesheet" type="text/css">
 <body>
 <style scoped>
-    table {
-
-    }
     table, td, table, div, input {
         text-align: center;
     }
+
     .knobdiv {
         padding-left: 0;
         padding-right: 0;
@@ -108,16 +106,16 @@
                         </td>
                         <td>
                             <div class="knobdiv">
-                            <div style="display:inline;width:150px;height:200px;">
-                                <input class="knob" data-width="150" data-angleoffset="-125" data-anglearc="250"
-                                       data-fgcolor="#66EE66" value="0"
-                                       style="width: 79px; height: 50px; position: absolute; vertical-align: middle;
+                                <div style="display:inline;width:150px;height:200px;">
+                                    <input class="knob" data-width="150" data-angleoffset="-125" data-anglearc="250"
+                                           data-fgcolor="#66EE66" value="0"
+                                           style="width: 79px; height: 50px; position: absolute; vertical-align: middle;
                            margin-top: 66px; margin-left: -152px;
                            border: 0; font-weight: bold; font-style: normal;
                            font-variant: normal; font-stretch: normal; font-size: 40px; line-height: normal;
                            font-family: Arial,sans-serif; text-align: center; color: rgb(102, 238, 102);
                            padding: 0; -webkit-appearance: none; background: none;" title="">
-                            </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

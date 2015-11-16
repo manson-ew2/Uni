@@ -30,9 +30,16 @@ public class MainServlet extends HttpServlet {
         String action = request.getParameter("action");
         System.out.println("Got action: " + action);
         response.setContentType("application/json");
+        response.setStatus(200);
         PrintWriter out = response.getWriter();
-        String value = PythonExecutor.executeAndRead(new Date().toString());
-        out.println("{\"value\":" + value + "}");
+        String value = PythonExecutor.getInstance().executeAndRead(new Date().toString());
+        if (value.equals(PythonExecutor.ERROR)) {
+            response.setStatus(500);
+        }
+        out.flush();
+        String resp = "{\"value\":\"" + value + "\"}";
+        resp = resp.replace("\n", "").replace("\r", "");
+        out.print(resp);
         out.close();
     }
 

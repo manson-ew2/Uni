@@ -1,8 +1,9 @@
 package com.uni.python;
 
+import com.uni.Utils.OSValidator;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -10,12 +11,30 @@ import java.io.InputStreamReader;
  */
 public final class PythonExecutor {
 
-    public static String executeAndRead(String command) {
+    public static final String ERROR = "Got error";
+    private String FILE_NAME;
+    private String PYTHON_BIN;
+
+    private PythonExecutor() {
+        if (OSValidator.isWindows()) {
+            FILE_NAME = "ser_win.py";
+            PYTHON_BIN = "py";
+        } else {
+            FILE_NAME = "ser.py";
+            PYTHON_BIN = "python";
+        }
+    }
+
+    public static PythonExecutor getInstance() {
+        return new PythonExecutor();
+    }
+
+    public String executeAndRead(String command) {
         String response;
-        String absolutePath = new File("ser.py").getAbsolutePath();
-        String relativePath = new File("ser.py").getPath();
-        System.out.println("ABS: " + absolutePath);
-        System.out.println("REL: " + relativePath);
+        File file = new File(FILE_NAME);
+        String absolutePath = file.getAbsolutePath();
+        String relativePath = file.getPath();
+        System.out.println("ABS: " + absolutePath + " REL: " + relativePath);
         response = execute(command, absolutePath);
         if (response == null || response.length() < 1) {
             response = execute(command, relativePath);
@@ -23,24 +42,23 @@ public final class PythonExecutor {
         return response;
     }
 
-    private static String execute(String command, String file) {
+    private String execute(String command, String file) {
         String response;
         String[] cmd = {
-                "python", file, command
+                PYTHON_BIN, file, command
         };
         try {
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String line;
-            for (int i = 0; i < 1000; i++) {
-                while ((line = br.readLine()) != null) {
-                    sb.append(line).append("\n");
-                }
+            Thread.sleep(100);
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
             }
             response = sb.toString();
         } catch (Exception e) {
-            response = "Got error";
+            response = ERROR;
             e.printStackTrace();
         }
         return response;
