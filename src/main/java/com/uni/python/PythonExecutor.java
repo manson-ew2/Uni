@@ -39,7 +39,7 @@ public final class PythonExecutor {
                 }
             }
             response = sb.toString();
-        } catch (IOException e) {
+        } catch (Exception e) {
             response = "Got error";
             e.printStackTrace();
         }
