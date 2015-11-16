@@ -9,9 +9,30 @@ $(document).ready(function () {
     var BATTERY_CHARGE_CLASSES = [BATTERY_CHARGE_50, BATTERY_CHARGE_50_80, BATTERY_CHARGE_80];
 
     $('#post').click(function () {
+        alert(writeToConsole(null, null));
         var obj = sendPost("test", 20);
-        changeBatteryProgressBar(obj.value);
+        console.log(obj);
+        //changeBatteryProgressBar(obj.value);
     });
+
+    function getTimeString(timeValue) {
+        var result = timeValue;
+        if (Number(timeValue) < 9) {
+            result = "0" + timeValue;
+        }
+        return result;
+    }
+
+    function getCurrentTimeString() {
+        var currentDate = new Date();
+        return getTimeString(currentDate.getHours()) + ":"
+            + getTimeString(currentDate.getMinutes()) + ":"
+            + getTimeString(currentDate.getSeconds());
+    }
+
+    function writeToConsole(type, message) {
+        return getCurrentTimeString();
+    }
 
 
     function changeBatteryProgressBar(value) {
