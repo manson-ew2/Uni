@@ -1,7 +1,7 @@
 package com.uni.python;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -13,7 +13,7 @@ public final class PythonExecutor {
     public static String executeAndRead(String command) {
         String response;
         String[] cmd = {
-                "python ser.py fds"
+                "python " + new File("ser.py").getAbsolutePath() + " fds"
         };
         try {
             Process process = Runtime.getRuntime().exec(cmd);
