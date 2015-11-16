@@ -13,7 +13,7 @@ public final class PythonExecutor {
     public static String executeAndRead(String command) {
         String response;
         String[] cmd = {
-                "python script.py '" + command + "'"
+                "python ser.py '" + command + "'"
         };
         try {
             Process process = Runtime.getRuntime().exec(cmd);
