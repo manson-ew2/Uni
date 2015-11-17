@@ -32,7 +32,7 @@
                 <table id="camera-table">
                     <tr>
                         <td>
-                            <img width="500" height="500" src="">
+                            <img width="500" height="500" style="-webkit-user-select: none" src="http://localhost:8081/">
                         </td>
                     </tr>
                     <tr>
