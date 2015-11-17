@@ -5,17 +5,17 @@ package com.uni.services;
  */
 public class RobotMoveService {
 
-    private static final String COMMAND = "m %s %s 30\r\n";
+    private static final String COMMAND = "m %s %s 30";
 
     public String getMoveCommand(String speed, String angle) {
         return String.format(COMMAND, speed, angle);
     }
 
     public String getStopCommand() {
-        return "s\r\n";
+        return "s";
     }
 
     public String getHeightCommand(String height) {
-        return "z " + height + "\r\n";
+        return "z " + height;
     }
 }

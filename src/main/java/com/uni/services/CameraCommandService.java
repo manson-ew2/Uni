@@ -5,7 +5,7 @@ package com.uni.services;
  */
 public class CameraCommandService {
 
-    private static final String COMMAND = "C %s %s\r\n";
+    private static final String COMMAND = "C %s %s";
     private static final int MIN_X = 20;
     private static final int MIN_Y = 20;
     private static final int MAX_X = 160;

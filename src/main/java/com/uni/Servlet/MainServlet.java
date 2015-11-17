@@ -78,12 +78,12 @@ public class MainServlet extends HttpServlet {
                 String heightResult = executePythonScriptWithArgs(robotMoveService.getHeightCommand(values[2]));
                 return moveResult + "," + heightResult;
             case BatteryInfo:
-                return (random.nextInt(100) + 1) + "," + (random.nextInt(100) + 1);
-            //return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
+//                return (random.nextInt(100) + 1) + "," + (random.nextInt(100) + 1);
+                return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
             case RobotStop:
                 return executePythonScriptWithArgs(robotMoveService.getStopCommand());
             case Manual:
-                return executePythonScriptWithArgs(param + "\r\n");
+                return executePythonScriptWithArgs(param);
             default:
                 break;
         }

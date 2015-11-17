@@ -78,9 +78,14 @@ $(document).ready(function () {
                 writeToConsole('RPI', 'Success: ' + JSON.stringify(data));
                 result = data;
                 if (action === 'batteryInfo') {
-                    var resp = result.value.split(",");
-                    changeBatteryProgressBar(resp[0], 1);
-                    changeBatteryProgressBar(resp[1], 2);
+                    if (result.value.includes(',')) {
+                        var resp = result.value.split(",");
+                        changeBatteryProgressBar(resp[0], 1);
+                        changeBatteryProgressBar(resp[1], 2);
+                    } else {
+                        changeBatteryProgressBar(result.value, 1);
+                        changeBatteryProgressBar(result.value, 2);
+                    }
                 }
                 return data;
             })
