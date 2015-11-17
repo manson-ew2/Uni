@@ -1,0 +1,83 @@
+.speed {
+    width: 79px;
+    height: 50px;
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 50px;
+    margin-left: -114px;
+    border: 0 none;
+    background: transparent none repeat scroll 0 0;
+    font: bold 30px Arial;
+    text-align: center;
+    color: rgb(34, 34, 34);
+    padding: 0;
+}
+
+.angle {
+    width: 79px;
+    height: 50px;
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 66px;
+    margin-left: -152px;
+    border: 0;
+    font-weight: bold;
+    font-style: normal;
+    font-variant: normal;
+    font-stretch: normal;
+    font-size: 40px;
+    line-height: normal;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: rgb(102, 238, 102);
+    padding: 0;
+    -webkit-appearance: none;
+    background: none;
+}
+
+.height {
+    width: 79px;
+    height: 50px;
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 66px;
+    margin-left: -152px;
+    border: 0;
+    font-weight: bold;
+    font-style: normal;
+    font-variant: normal;
+    font-stretch: normal;
+    font-size: 40px;
+    line-height: normal;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: rgb(102, 238, 102);
+    padding: 0;
+    -webkit-appearance: none;
+    background: none;
+}
+
+div.knob {
+    display: inline;
+    width: 150px;
+    height: 200px;
+}
+
+table {
+    width: 100%;
+    /*border: 4px double black;*/
+}
+
+table, td, table, div, input, label {
+    text-align: center;
+}
+
+table.control {
+    width: auto;
+}
+
+.DivWithScroll {
+    height:120px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
