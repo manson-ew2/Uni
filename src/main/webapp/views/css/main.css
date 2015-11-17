@@ -77,7 +77,8 @@ table.control {
 }
 
 .DivWithScroll {
-    height:120px;
-    overflow:scroll;
-    overflow-x:hidden;
+    text-align: left;
+    height: 120px;
+    overflow: scroll;
+    overflow-x: hidden;
 }

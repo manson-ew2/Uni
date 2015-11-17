@@ -107,7 +107,7 @@
                                                    data-angleoffset="-125"
                                                    data-anglearc="250"
                                                    data-min="0"
-                                                   data-max="100"
+                                                   data-max="50"
                                                    data-fgcolor="#66EE66" value="0"
                                                    style="" title="Speed">
 
@@ -128,8 +128,8 @@
                                             <br/>
                                             <input class="knob height" data-width="150" data-angleoffset="-125"
                                                    data-anglearc="250"
-                                                   data-min="4"
-                                                   data-max="12"
+                                                   data-min="50"
+                                                   data-max="110"
                                                    data-fgcolor="#66EE66" value="5" title="Height">
                                         </td>
                                     </tr>

@@ -34,7 +34,6 @@ public final class PythonExecutor {
         File file = new File(FILE_NAME);
         String absolutePath = file.getAbsolutePath();
         String relativePath = file.getPath();
-        System.out.println("ABS: " + absolutePath + " REL: " + relativePath);
         response = execute(command, absolutePath);
         if (response == null || response.length() < 1) {
             response = execute(command, relativePath);

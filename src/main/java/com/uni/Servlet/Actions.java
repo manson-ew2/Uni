@@ -5,6 +5,14 @@ package com.uni.servlet;
  */
 public enum Actions {
     CameraUp, CameraDown, CameraLeft, CameraRight, CameraCenter,
-    RobotForward, RobotBackward, RobotLeft, RobotRight, RobotStop, RobotTurnLeft, RobotTurnRight,
-    RobotSpeed, BatteryCharge
+    Move, RobotSpeed, BatteryInfo, RobotHeight, Manual, Unrecognized;
+
+    public static Actions getActionsFromString(String value) {
+        for (Actions actions : Actions.values()) {
+            if (actions.toString().toLowerCase().contains(value.toLowerCase())) {
+                return actions;
+            }
+        }
+        return Unrecognized;
+    }
 }
