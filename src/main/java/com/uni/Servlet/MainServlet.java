@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 /**
  * @author sdaskaliesku
@@ -20,6 +21,7 @@ public class MainServlet extends HttpServlet {
     private CameraCommandService cameraService;
     private RobotMoveService robotMoveService;
     private ArduinoService arduinoService;
+    private Random random;
 
     @Override
     public void init() throws ServletException {
@@ -27,6 +29,7 @@ public class MainServlet extends HttpServlet {
         cameraService = new CameraCommandService();
         robotMoveService = new RobotMoveService();
         arduinoService = new ArduinoService();
+        random = new Random();
     }
 
     @Override
@@ -49,8 +52,9 @@ public class MainServlet extends HttpServlet {
             response.setStatus(500);
         }
         out.flush();
-        String jsonResp = "{\"value\":\"" + value + "\"}";
+        String jsonResp = "{\"value\":\"" + resp + "\"}";
         jsonResp = jsonResp.replace("\n", "").replace("\r", "");
+        System.out.println("Returning json response: " + jsonResp);
         out.print(jsonResp);
         out.close();
     }
@@ -70,11 +74,14 @@ public class MainServlet extends HttpServlet {
                 return executePythonScriptWithArgs(cameraService.right());
             case Move:
                 String[] values = param.split(",");
-                String moveResult = executePythonScriptWithArgs(robotMoveService.getCommand(values[0], values[1]));
+                String moveResult = executePythonScriptWithArgs(robotMoveService.getMoveCommand(values[0], values[1]));
                 String heightResult = executePythonScriptWithArgs(robotMoveService.getHeightCommand(values[2]));
                 return moveResult + "," + heightResult;
             case BatteryInfo:
-                return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
+                return (random.nextInt(100) + 1) + "," + (random.nextInt(100) + 1);
+            //return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
+            case RobotStop:
+                return executePythonScriptWithArgs(robotMoveService.getStopCommand());
             case Manual:
                 return executePythonScriptWithArgs(param + "\r\n");
             default:

@@ -67,19 +67,29 @@ $(document).ready(function () {
     function sendPost(action, value) {
         var request = "Action: " + action + " value: " + value;
         writeToConsole('PC', request);
+        var result;
         $.post("/Main", {action: action, value: value})
             //.done(function (data) {
-            //    writeToConsole('RPI', 'Done: ' + data);
+            //    writeToConsole('RPI', 'Done: ' + JSON.stringify(data));
+            //    result = data;
             //    return data;
             //})
             .success(function (data) {
-                writeToConsole('RPI', 'Success: ' + data);
+                writeToConsole('RPI', 'Success: ' + JSON.stringify(data));
+                result = data;
+                if (action === 'batteryInfo') {
+                    var resp = result.value.split(",");
+                    changeBatteryProgressBar(resp[0], 1);
+                    changeBatteryProgressBar(resp[1], 2);
+                }
                 return data;
             })
             .error(function (err) {
-                writeToConsole('RPI', 'Err: ' + err);
+                writeToConsole('RPI', 'Err: ' + JSON.stringify(err));
+                result = err;
                 console.log(err);
             });
+        return result;
     }
 
     function getSpeed() {
@@ -114,11 +124,9 @@ $(document).ready(function () {
 
     $("#update").click(function () {
         sendPost("batteryInfo", 0);
-        var data = {};
-        data.value = 10;
-        changeBatteryProgressBar(data.value, 1);
-        data.value = 70;
-        changeBatteryProgressBar(data.value, 2);
+        //var data = resp.value.split(",");
+        //changeBatteryProgressBar(resp[0], 1);
+        //changeBatteryProgressBar(resp[1], 2);
     });
 
     $("#go").click(function () {
@@ -132,9 +140,9 @@ $(document).ready(function () {
 
     $("#send").click(function () {
         var txt = $('#console-input').val();
-        writeToConsole('RPI', txt);
         writeToConsole('PC', txt);
         $('#console-input').val("");
+        sendPost("manual", txt);
     });
 
     $("#clear").click(function () {
@@ -154,7 +162,7 @@ $(document).ready(function () {
         sendPost('videoRec', 0);
     });
 
-    $(document).keypress(function (e) {
+    /*$(document).keypress(function (e) {
         // wasd, arrows, C/Space = center
         if (e.which === 119) {
             $(".glyphicon-arrow-up").click();
@@ -171,10 +179,13 @@ $(document).ready(function () {
         if (e.which === 99 || e.which === 32) {
             $(".glyphicon-screenshot").click();
         }
-    });
+    });*/
 
     $(document).keydown(function (e) {
-        // wasd, arrows, C/Space = center
+        // arrows
+        if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+            e.preventDefault();
+        }
         if (e.which === 38) {
             $(".glyphicon-arrow-up").click();
         }
@@ -186,6 +197,10 @@ $(document).ready(function () {
         }
         if (e.which === 39) {
             $(".glyphicon-arrow-right").click();
+        }
+        // ctrl
+        if (e.which === 17) {
+            $(".glyphicon-screenshot").click();
         }
     });
 });
