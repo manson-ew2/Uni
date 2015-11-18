@@ -42,6 +42,7 @@ $(document).ready(function () {
 
 
     function changeBatteryProgressBar(value, num) {
+        value = validateBattery(value);
         var numValue = Number(value);
         var clazz = BATTERY_CHARGE_80;
         if (numValue <= 0) {
@@ -73,8 +74,13 @@ $(document).ready(function () {
             .success(function (data) {
                 writeToConsole('RPI', 'Success: ' + JSON.stringify(data));
                 if (action === 'batteryInfo') {
+                    var resp;
                     if (data.value.includes(',')) {
-                        var resp = result.value.split(",");
+                        resp = result.value.split(",");
+                        changeBatteryProgressBar(resp[0], 1);
+                        changeBatteryProgressBar(resp[1], 2);
+                    } else if (data.value.includes(' ')) {
+                        resp = result.value.split(" ");
                         changeBatteryProgressBar(resp[0], 1);
                         changeBatteryProgressBar(resp[1], 2);
                     } else {
@@ -91,6 +97,13 @@ $(document).ready(function () {
             });
     }
 
+    function validateBattery(input) {
+        if (input.includes("nan")) {
+            return 0;
+        }
+        return input;
+    }
+
     function getSpeed() {
         return $("input.speed").val();
     }
@@ -100,7 +113,7 @@ $(document).ready(function () {
     }
 
     function getAngle() {
-        return $("input.angle").val();
+        return Number($("input.angle").val()) + 90;
     }
 
     $(".glyphicon-arrow-up").click(function () {
@@ -160,7 +173,7 @@ $(document).ready(function () {
 
     $(document).keydown(function (e) {
         // arrows
-        if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
         if (e.which === 38) {
