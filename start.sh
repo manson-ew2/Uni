@@ -1,1 +1,1 @@
-mvn clean jetty:run
+mvn clean jetty:run -Djetty.port=8888
