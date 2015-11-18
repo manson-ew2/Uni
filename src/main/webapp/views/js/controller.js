@@ -113,7 +113,11 @@ $(document).ready(function () {
     }
 
     function getAngle() {
-        return Number($("input.angle").val()) + 90;
+        var angle = Number($("input.angle").val()) + 90;
+        if (angle > 360) {
+            angle = angle - 360;
+        }
+        return  angle;
     }
 
     $(".glyphicon-arrow-up").click(function () {
