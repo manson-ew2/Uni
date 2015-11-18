@@ -76,11 +76,11 @@ $(document).ready(function () {
                 if (action === 'batteryInfo') {
                     var resp;
                     if (data.value.includes(',')) {
-                        resp = result.value.split(",");
+                        resp = data.value.split(",");
                         changeBatteryProgressBar(resp[0], 1);
                         changeBatteryProgressBar(resp[1], 2);
                     } else if (data.value.includes(' ')) {
-                        resp = result.value.split(" ");
+                        resp = data.value.split(" ");
                         changeBatteryProgressBar(resp[0], 1);
                         changeBatteryProgressBar(resp[1], 2);
                     } else {
