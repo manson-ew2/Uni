@@ -1,9 +1,9 @@
 package com.uni.servlet;
 
 import com.uni.python.PythonExecutor;
-import com.uni.services.ArduinoService;
+import com.uni.services.ArduinoCommandService;
 import com.uni.services.CameraCommandService;
-import com.uni.services.RobotMoveService;
+import com.uni.services.RobotMoveCommandService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,16 +19,16 @@ import java.util.Random;
 public class MainServlet extends HttpServlet {
 
     private CameraCommandService cameraService;
-    private RobotMoveService robotMoveService;
-    private ArduinoService arduinoService;
+    private RobotMoveCommandService robotMoveService;
+    private ArduinoCommandService arduinoService;
     private Random random;
 
     @Override
     public void init() throws ServletException {
         super.init();
         cameraService = new CameraCommandService();
-        robotMoveService = new RobotMoveService();
-        arduinoService = new ArduinoService();
+        robotMoveService = new RobotMoveCommandService();
+        arduinoService = new ArduinoCommandService();
         random = new Random();
     }
 

@@ -3,7 +3,7 @@ package com.uni.services;
 /**
  * @author sdaskaliesku
  */
-public class RobotMoveService {
+public class RobotMoveCommandService {
 
     private static final String COMMAND = "m %s %s 30";
 

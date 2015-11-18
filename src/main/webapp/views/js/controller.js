@@ -7,6 +7,8 @@ $(document).ready(function () {
     var BATTERY_CHARGE_50_80 = 'progress-bar-warning';
     var BATTERY_CHARGE_50 = 'progress-bar-danger';
     var BATTERY_CHARGE_CLASSES = [BATTERY_CHARGE_50, BATTERY_CHARGE_50_80, BATTERY_CHARGE_80];
+    var LOGS = $('#logs');
+    var CONSOLE_INPUT = $('#console-input');
 
     function getTimeString(timeValue) {
         var result = timeValue;
@@ -34,8 +36,8 @@ $(document).ready(function () {
         }
         var labelHtml = '<span class="label ' + labelClass + '">' + getCurrentTimeString() + '</span>';
         var messageHtml = '<p>' + labelHtml + '&nbsp;' + text + '</p>';
-        $('#logs').append(messageHtml);
-        $("#logs").scrollTop($("#logs")[0].scrollHeight);
+        LOGS.append(messageHtml);
+        LOGS.scrollTop(LOGS[0].scrollHeight);
     }
 
 
@@ -67,34 +69,26 @@ $(document).ready(function () {
     function sendPost(action, value) {
         var request = "Action: " + action + " value: " + value;
         writeToConsole('PC', request);
-        var result;
         $.post("/Main", {action: action, value: value})
-            //.done(function (data) {
-            //    writeToConsole('RPI', 'Done: ' + JSON.stringify(data));
-            //    result = data;
-            //    return data;
-            //})
             .success(function (data) {
                 writeToConsole('RPI', 'Success: ' + JSON.stringify(data));
-                result = data;
                 if (action === 'batteryInfo') {
-                    if (result.value.includes(',')) {
+                    if (data.value.includes(',')) {
                         var resp = result.value.split(",");
                         changeBatteryProgressBar(resp[0], 1);
                         changeBatteryProgressBar(resp[1], 2);
                     } else {
-                        changeBatteryProgressBar(result.value, 1);
-                        changeBatteryProgressBar(result.value, 2);
+                        changeBatteryProgressBar(data.value, 1);
+                        changeBatteryProgressBar(data.value, 2);
                     }
                 }
                 return data;
             })
             .error(function (err) {
                 writeToConsole('RPI', 'Err: ' + JSON.stringify(err));
-                result = err;
                 console.log(err);
+                return err;
             });
-        return result;
     }
 
     function getSpeed() {
@@ -129,9 +123,6 @@ $(document).ready(function () {
 
     $("#update").click(function () {
         sendPost("batteryInfo", 0);
-        //var data = resp.value.split(",");
-        //changeBatteryProgressBar(resp[0], 1);
-        //changeBatteryProgressBar(resp[1], 2);
     });
 
     $("#go").click(function () {
@@ -144,9 +135,9 @@ $(document).ready(function () {
     });
 
     $("#send").click(function () {
-        var txt = $('#console-input').val();
+        var txt = CONSOLE_INPUT.val();
         writeToConsole('PC', txt);
-        $('#console-input').val("");
+        CONSOLE_INPUT.val("");
         sendPost("manual", txt);
     });
 
@@ -167,28 +158,9 @@ $(document).ready(function () {
         sendPost('videoRec', 0);
     });
 
-    /*$(document).keypress(function (e) {
-        // wasd, arrows, C/Space = center
-        if (e.which === 119) {
-            $(".glyphicon-arrow-up").click();
-        }
-        if (e.which === 115) {
-            $(".glyphicon-arrow-down").click();
-        }
-        if (e.which === 97) {
-            $(".glyphicon-arrow-left").click();
-        }
-        if (e.which === 100) {
-            $(".glyphicon-arrow-right").click();
-        }
-        if (e.which === 99 || e.which === 32) {
-            $(".glyphicon-screenshot").click();
-        }
-    });*/
-
     $(document).keydown(function (e) {
         // arrows
-        if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
         if (e.which === 38) {
