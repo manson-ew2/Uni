@@ -26,27 +26,27 @@
 <body>
 <center>
     <label><h2>Raspberry PI Admin Page</h2></label><br/>
-    <table width="auto">
+    <table>
         <tr>
             <td id="camera-frame">
                 <table id="camera-table">
                     <tr>
                         <td>
-                            <img width="500" height="500" style="-webkit-user-select: none" src="http://localhost:8081/">
+                            <img width="500" height="500" style="-webkit-user-select: none" id="videoFrame" src="http://localhost:8081/">
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary">
-                                    <input type="radio" name="options" id="video" autocomplete="off">Video
+                                <label class="btn btn-primary" id="video" >
+                                    <input type="radio" name="options" autocomplete="off">Video
                                 </label>
-                                <label class="btn btn-primary active">
-                                    <input type="radio" name="options" id="videoOff" autocomplete="off" checked>No
+                                <label class="btn btn-primary active" id="videoOff" >
+                                    <input type="radio" name="options" autocomplete="off" checked>No
                                     video
                                 </label>
-                                <label class="btn btn-primary">
-                                    <input type="radio" name="options" id="videoRec" autocomplete="off">Video +
+                                <label class="btn btn-primary" id="videoRec" >
+                                    <input type="radio" name="options" autocomplete="off">Video +
                                     recognition
                                 </label>
                             </div>
@@ -135,7 +135,9 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            <button class="btn btn-lg glyphicon glyphicon-circle-arrow-left"></button>
                                             <input type="button" id="go" class="btn btn-lg btn-success" value="GO">
+                                            <button class="btn btn-lg glyphicon glyphicon-circle-arrow-right"></button>
                                         </td>
                                         <td>
                                             <input type="button" id="update" class="btn btn-lg btn-info" value="Update">
@@ -185,7 +187,7 @@
 
                     </div>
                     <div class="input-group">
-                        <input type="text" id="console-input" class="form-control" placeholder="Enter your command...">
+                        <input align="left" style="text-align: left" id="console-input" class="form-control" placeholder="Enter your command...">
                     <span class="input-group-btn">
                         <button class="btn btn-warning" id="clear" type="button">Clear</button>
                         <button class="btn btn-info" id="send" type="button">Send!</button>

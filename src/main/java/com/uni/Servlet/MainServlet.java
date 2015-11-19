@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Random;
 
 /**
  * @author sdaskaliesku
@@ -19,9 +18,12 @@ import java.util.Random;
 public class MainServlet extends HttpServlet {
 
     private CameraCommandService cameraService;
+
     private RobotMoveCommandService robotMoveService;
+
     private ArduinoCommandService arduinoService;
-    private Random random;
+
+    //private Random random;
 
     @Override
     public void init() throws ServletException {
@@ -29,7 +31,7 @@ public class MainServlet extends HttpServlet {
         cameraService = new CameraCommandService();
         robotMoveService = new RobotMoveCommandService();
         arduinoService = new ArduinoCommandService();
-        random = new Random();
+        //random = new Random();
     }
 
     @Override
@@ -62,30 +64,34 @@ public class MainServlet extends HttpServlet {
     private String getResponse(String actionString, String param) {
         Actions action = Actions.getActionsFromString(actionString);
         switch (action) {
-            case CameraCenter:
-                return executePythonScriptWithArgs(cameraService.center());
-            case CameraUp:
-                return executePythonScriptWithArgs(cameraService.up());
-            case CameraDown:
-                return executePythonScriptWithArgs(cameraService.down());
-            case CameraLeft:
-                return executePythonScriptWithArgs(cameraService.left());
-            case CameraRight:
-                return executePythonScriptWithArgs(cameraService.right());
-            case Move:
-                String[] values = param.split(",");
-                String moveResult = executePythonScriptWithArgs(robotMoveService.getMoveCommand(values[0], values[1]));
-                String heightResult = executePythonScriptWithArgs(robotMoveService.getHeightCommand(values[2]));
-                return moveResult + "," + heightResult;
-            case BatteryInfo:
-//                return (random.nextInt(100) + 1) + "," + (random.nextInt(100) + 1);
-                return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
-            case RobotStop:
-                return executePythonScriptWithArgs(robotMoveService.getStopCommand());
-            case Manual:
-                return executePythonScriptWithArgs(param);
-            default:
-                break;
+        case CameraCenter:
+            return executePythonScriptWithArgs(cameraService.center());
+        case CameraUp:
+            return executePythonScriptWithArgs(cameraService.up());
+        case CameraDown:
+            return executePythonScriptWithArgs(cameraService.down());
+        case CameraLeft:
+            return executePythonScriptWithArgs(cameraService.left());
+        case CameraRight:
+            return executePythonScriptWithArgs(cameraService.right());
+        case Move:
+            String[] values = param.split(",");
+            String moveResult = executePythonScriptWithArgs(robotMoveService.getMoveCommand(values[0], values[1]));
+            String heightResult = executePythonScriptWithArgs(robotMoveService.getHeightCommand(values[2]));
+            return moveResult + "," + heightResult;
+        case BatteryInfo:
+            //return (random.nextInt(100) + 1) + "," + (random.nextInt(100) + 1);
+            return executePythonScriptWithArgs(arduinoService.getBatteryInfo());
+        case RobotStop:
+            return executePythonScriptWithArgs(robotMoveService.getStopCommand());
+        case RobotTurnLeft:
+            return executePythonScriptWithArgs(robotMoveService.getTurnLeftCommand());
+        case RobotTurnRight:
+            return executePythonScriptWithArgs(robotMoveService.getTurnRightCommand());
+        case Manual:
+            return executePythonScriptWithArgs(param);
+        default:
+            break;
         }
         return PythonExecutor.ERROR + " unknown command";
     }

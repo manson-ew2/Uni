@@ -22,13 +22,13 @@ public class CameraCommandService {
     }
 
     public String up() {
-        y += STEP;
+        y -= STEP;
         y = validateY();
         return getCurrentCommand();
     }
 
     public String down() {
-        y -= STEP;
+        y += STEP;
         y = validateY();
         return getCurrentCommand();
     }

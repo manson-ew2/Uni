@@ -9,6 +9,10 @@ $(document).ready(function () {
     var BATTERY_CHARGE_CLASSES = [BATTERY_CHARGE_50, BATTERY_CHARGE_50_80, BATTERY_CHARGE_80];
     var LOGS = $('#logs');
     var CONSOLE_INPUT = $('#console-input');
+    var VIDEO_FRAME = $('#videoFrame');
+
+    var VIDEO_LINK = '';
+    var VIDEO_RECOGNITION_LINK = '';
 
     function getTimeString(timeValue) {
         var result = timeValue;
@@ -27,7 +31,7 @@ $(document).ready(function () {
 
     function writeToConsole(type, text) {
         if (!text || text.length < 1) {
-            alert('We should not send empty strings to RPI!');
+            //alert('We should not send empty strings to RPI!');
             return;
         }
         var labelClass = 'label-danger';
@@ -77,15 +81,12 @@ $(document).ready(function () {
                     var resp;
                     if (data.value.includes(',')) {
                         resp = data.value.split(",");
-                        changeBatteryProgressBar(resp[0], 1);
-                        changeBatteryProgressBar(resp[1], 2);
+                        changeBatteryStates(resp[0], resp[1]);
                     } else if (data.value.includes(' ')) {
                         resp = data.value.split(" ");
-                        changeBatteryProgressBar(resp[0], 1);
-                        changeBatteryProgressBar(resp[1], 2);
+                        changeBatteryStates(resp[0], resp[1]);
                     } else {
-                        changeBatteryProgressBar(data.value, 1);
-                        changeBatteryProgressBar(data.value, 2);
+                        changeBatteryStates(data.value, data.value);
                     }
                 }
                 return data;
@@ -95,6 +96,15 @@ $(document).ready(function () {
                 console.log(err);
                 return err;
             });
+    }
+
+    function changeBatteryStates(val1, val2) {
+        if (val1) {
+            changeBatteryProgressBar(val1, 1);
+        }
+        if (val2) {
+            changeBatteryProgressBar(val2, 2);
+        }
     }
 
     function validateBattery(input) {
@@ -117,17 +127,15 @@ $(document).ready(function () {
         if (angle > 360) {
             angle = angle - 360;
         }
-        return  angle;
+        return angle;
     }
 
     $(".glyphicon-arrow-up").click(function () {
         sendPost("cameraUp", 0);
     });
-
     $(".glyphicon-arrow-down").click(function () {
         sendPost("cameraDown", 0);
     });
-
     $(".glyphicon-arrow-left").click(function () {
         sendPost("cameraLeft", 0);
     });
@@ -136,6 +144,13 @@ $(document).ready(function () {
     });
     $(".glyphicon-screenshot").click(function () {
         sendPost("cameraCenter", 0);
+    });
+
+    $(".glyphicon-circle-arrow-left").click(function () {
+        sendPost("turnLeft", 0);
+    });
+    $(".glyphicon-circle-arrow-right").click(function () {
+        sendPost("turnRight", 0);
     });
 
     $("#update").click(function () {
@@ -151,8 +166,20 @@ $(document).ready(function () {
         sendPost("stop", 0);
     });
 
+    $("#turnLeft").click(function () {
+        sendPost("turnLeft", 0);
+    });
+
+    $("#turnRight").click(function () {
+        sendPost("turnRight", 0);
+    });
+
     $("#send").click(function () {
-        var txt = CONSOLE_INPUT.val();
+        var text = CONSOLE_INPUT.val();
+        if (!text || text.length < 1) {
+            alert('We should not send empty strings to RPI!');
+            return;
+        }
         writeToConsole('PC', txt);
         CONSOLE_INPUT.val("");
         sendPost("manual", txt);
@@ -164,19 +191,19 @@ $(document).ready(function () {
     });
 
     $("#videoOff").click(function () {
-        sendPost('videoOff', 0);
+        VIDEO_FRAME.attr('src', '');
     });
 
     $("#video").click(function () {
-        sendPost('video', 0);
+        VIDEO_FRAME.attr('src', VIDEO_LINK);
     });
 
     $("#videoRec").click(function () {
-        sendPost('videoRec', 0);
+        VIDEO_FRAME.attr('src', VIDEO_RECOGNITION_LINK);
     });
 
     $(document).keydown(function (e) {
-        // arrows
+        // prevent arrow key scrolling
         if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
