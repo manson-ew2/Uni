@@ -123,12 +123,7 @@ $(document).ready(function () {
     }
 
     function getAngle() {
-        var angle = Number($("input.angle").val()) + 90;
-        if (angle > 360) {
-            angle = angle - 360;
-        }
-        angle = 360 - angle;
-        return angle;
+        return 360 - Number($("input.angle").val()) + 90;
     }
 
     $(".glyphicon-arrow-up").click(function () {

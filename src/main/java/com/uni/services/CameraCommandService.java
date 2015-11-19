@@ -34,13 +34,13 @@ public class CameraCommandService {
     }
 
     public String left() {
-        x -= STEP;
+        x += STEP;
         x = validateX();
         return getCurrentCommand();
     }
 
     public String right() {
-        x += STEP;
+        x -= STEP;
         x = validateX();
         return getCurrentCommand();
     }
@@ -53,22 +53,6 @@ public class CameraCommandService {
 
     public String getCurrentCommand() {
         return String.format(COMMAND, x, y);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     private int validateX() {
