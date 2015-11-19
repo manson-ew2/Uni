@@ -127,6 +127,7 @@ $(document).ready(function () {
         if (angle > 360) {
             angle = angle - 360;
         }
+        angle = 360 - angle;
         return angle;
     }
 
